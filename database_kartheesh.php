@@ -76,10 +76,10 @@
 			<th>Password</th>
 		</tr>
 		<?php
-			$con=mysqli_connect("localhost","root","") or die("Unable to connect!");
-			mysqli_select_db($con,"menternship");
+			$con=mysqli_connect("us-cdbr-east-02.cleardb.com","b8293ab7f22cc5","9398b6ea") or die("Unable to connect!");
+			mysqli_select_db($con,"heroku_da380dfb3ec7262");
 			$query="SELECT *
-					FROM menternship.admin";
+					FROM heroku_da380dfb3ec7262.admin";
 			if($query_run=mysqli_query($con,$query))
 			{
 			if(mysqli_num_rows($query_run))
@@ -112,10 +112,10 @@
 			<th>Password</th>
 		</tr>
 		<?php
-			$con=mysqli_connect("localhost","root","") or die("Unable to connect!");
-			mysqli_select_db($con,"menternship");
+			$con=mysqli_connect("us-cdbr-east-02.cleardb.com","b8293ab7f22cc5","9398b6ea") or die("Unable to connect!");
+			mysqli_select_db($con,"heroku_da380dfb3ec7262");
 			$query="SELECT *
-					FROM menternship.register";
+					FROM heroku_da380dfb3ec7262.register";
 			if($query_run=mysqli_query($con,$query))
 			{
 			if(mysqli_num_rows($query_run))
@@ -162,13 +162,13 @@
 			<th>Status</th>
 		</tr>
 		<?php
-			$con=mysqli_connect("localhost","root","") or die("Unable to connect!");
-			mysqli_select_db($con,"menternship");
+			$con=mysqli_connect("us-cdbr-east-02.cleardb.com","b8293ab7f22cc5","9398b6ea") or die("Unable to connect!");
+			mysqli_select_db($con,"heroku_da380dfb3ec7262");
 			
 			$query="SELECT r.username,r.password,n.test,n.prescription,n.lab,b.customer,b.mobile,b.email,b.address,b.date,b.time,b.id,b.status
-					FROM menternship.register AS r 
-					JOIN menternship.newbookingpage AS n
-					JOIN menternship.bookingdetails AS b
+					FROM heroku_da380dfb3ec7262.register AS r 
+					JOIN heroku_da380dfb3ec7262.newbookingpage AS n
+					JOIN heroku_da380dfb3ec7262.bookingdetails AS b
 					ON (r.username=n.username) AND (r.username=b.username) AND (n.id=b.id)";
 			if($query_run=mysqli_query($con,$query))
 			{
