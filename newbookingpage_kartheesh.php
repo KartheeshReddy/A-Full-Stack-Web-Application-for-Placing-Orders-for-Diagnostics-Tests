@@ -7,7 +7,7 @@
 	}
 ?>
 <?php
-	$con=mysqli_connect("localhost","root","") or die("Unable to connect!");
+	$con=mysqli_connect("us-cdbr-east-02.cleardb.com","b8293ab7f22cc5","9398b6ea") or die("Unable to connect!");
 	mysqli_select_db($con,"menternship");
 ?>
 <!DOCTYPE html>
