@@ -10,8 +10,8 @@
 	}
 ?>
 <?php
-	$con=mysqli_connect("us-cdbr-east-02.cleardb.com","b8293ab7f22cc5","9398b6ea") or die("Unable to connect!");
-	mysqli_select_db($con,"heroku_da380dfb3ec7262");	
+		$con=mysqli_connect("localhost","id14534500_kartheeshreddy","h+4Xk\)J~muU7[)&") or die("Unable to connect!");
+	    mysqli_select_db($con,"id14534500_menternship");	
 ?>
 <!DOCTYPE html>
 <html>

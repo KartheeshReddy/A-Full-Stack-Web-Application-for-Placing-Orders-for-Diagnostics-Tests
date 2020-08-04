@@ -76,10 +76,11 @@
 			<th>Password</th>
 		</tr>
 		<?php
-			$con=mysqli_connect("us-cdbr-east-02.cleardb.com","b8293ab7f22cc5","9398b6ea") or die("Unable to connect!");
-			mysqli_select_db($con,"heroku_da380dfb3ec7262");
+		$con=mysqli_connect("localhost","id14534500_kartheeshreddy","h+4Xk\)J~muU7[)&") or die("Unable to connect!");
+	    mysqli_select_db($con,"id14534500_menternship");	
+
 			$query="SELECT *
-					FROM heroku_da380dfb3ec7262.admin";
+					FROM id14534500_menternship.admin";
 			if($query_run=mysqli_query($con,$query))
 			{
 			if(mysqli_num_rows($query_run))
@@ -112,10 +113,10 @@
 			<th>Password</th>
 		</tr>
 		<?php
-			$con=mysqli_connect("us-cdbr-east-02.cleardb.com","b8293ab7f22cc5","9398b6ea") or die("Unable to connect!");
-			mysqli_select_db($con,"heroku_da380dfb3ec7262");
+		$con=mysqli_connect("localhost","id14534500_kartheeshreddy","h+4Xk\)J~muU7[)&") or die("Unable to connect!");
+	    mysqli_select_db($con,"id14534500_menternship");
 			$query="SELECT *
-					FROM heroku_da380dfb3ec7262.register";
+					FROM id14534500_menternship.register";
 			if($query_run=mysqli_query($con,$query))
 			{
 			if(mysqli_num_rows($query_run))
@@ -162,13 +163,13 @@
 			<th>Status</th>
 		</tr>
 		<?php
-			$con=mysqli_connect("us-cdbr-east-02.cleardb.com","b8293ab7f22cc5","9398b6ea") or die("Unable to connect!");
-			mysqli_select_db($con,"heroku_da380dfb3ec7262");
+		$con=mysqli_connect("localhost","id14534500_kartheeshreddy","h+4Xk\)J~muU7[)&") or die("Unable to connect!");
+	    mysqli_select_db($con,"id14534500_menternship");
 			
 			$query="SELECT r.username,r.password,n.test,n.prescription,n.lab,b.customer,b.mobile,b.email,b.address,b.date,b.time,b.id,b.status
-					FROM heroku_da380dfb3ec7262.register AS r 
-					JOIN heroku_da380dfb3ec7262.newbookingpage AS n
-					JOIN heroku_da380dfb3ec7262.bookingdetails AS b
+					FROM id14534500_menternship.register AS r 
+					JOIN id14534500_menternship.newbookingpage AS n
+					JOIN id14534500_menternship.bookingdetails AS b
 					ON (r.username=n.username) AND (r.username=b.username) AND (n.id=b.id)";
 			if($query_run=mysqli_query($con,$query))
 			{
