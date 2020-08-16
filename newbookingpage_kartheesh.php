@@ -23,8 +23,25 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">		
 		<link href="carousel.css" rel="stylesheet">
+		<meta name="generator" content="Bootply" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<title>New Booking Page</title>
+		<script>
+			function getlab(val) {
+				$.ajax({
+				type: "POST",
+				url: "getlab.php",
+				data:'test_id='+val,
+				success: function(data){
+					$("#lab").html(data);
+				}
+				});
+			}
+			function selectCountry(val) {
+			$("#search-box").val(val);
+			$("#suggesstion-box").hide();
+			}
+		</script>
 	</head>
 	<body background="image2.jpg">	
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -41,6 +58,9 @@
         <a class="nav-link" href="#section2">Contact</a>
       </li>
 	  <li class="nav-item">
+        <a class="nav-link" href="customerinfo_kartheesh.php">View Booking History</a>
+      </li>
+	  <li class="nav-item">
         <a class="nav-link" href="logout.php">Logout</a>
       </li>
     </ul>
@@ -52,41 +72,46 @@
 			<?php echo $_SESSION['username'] ?>!
 		</h3>
 		</center>
-		<form style="margin:100px 100px;backdrop-filter:blur(5px);"  action="newbookingpage_kartheesh.php" method="post" enctype="multipart/form-data"><!--border:solid 2px;"> -->
+		
+		<form name="insert" style="margin:100px 100px;backdrop-filter:blur(5px);"  action="newbookingpage_kartheesh.php" method="post" enctype="multipart/form-data">
 			<div style="padding-left:20px;">
 			<center><h2>New Booking</h2></center>
 			<fieldset>
 			<legend><big><b>Fill the following details:</b></big></legend>
 			<div style="padding-top:20px;padding-bottom:20px;">
-			<tr> 
-    			<td><label style="padding-right:93px;"for="Lab Tests"><b>Select a Lab Test:</b></label></td>  
-    			<td><select name="test" style="width:160px">  
-    			<option value="CT Scan">CT Scan</option>  
-    			<option value="Electrocardiogram (ECG)">Electrocardiogram (ECG)</option>  
-    			<option value="Endoscopy">Endoscopy</option>  
-    			<option value="MRI Scans">MRI Scans</option>  
-    			<option value="Thyroid Tests">Thyroid Tests</option>  
-			<option value="Other">Other</option>
-			</select>  
-			</td>  
-			</tr> 
-			</div>
-			<label><b>Upload Doctor's Prescription:</b></label>  
+				<label><b>Upload Doctor's Prescription:</b></label>  
     			<input type="file" name="prescription" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
-			<div>
-			<br>
-			<label><b>Select a lab:</b></label>
 			</div>
-			<input type="radio" name="lab" value="Lab1" checked>Lab1<br>
-			<input type="radio" name="lab" value="Lab2">Lab2<br>
-			<input type="radio" name="lab" value="Lab3">Lab3<br>
-			<br>
-			</div>
-			<input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" name="next_btn" value="Next">
-			<hr>
-			<a href="logoutpage_kartheesh.php"><input class="btn btn-lg btn-primary btn-block text-uppercase" type="button" value="Cancel"></a>
-			</fieldset>
-		</form>
+		  <table>
+		  <tr>
+			<td><label style="padding-right:93px;"for="Lab Tests"><b>Select a Test:</b></label></td>
+			<td><select style="width:160px" onChange="getlab(this.value);"  name="test" id="test" class="form-control" required>
+							<option value="" disabled selected>-Select Test-</option>
+		  <?php $query =mysqli_query($con,"SELECT * FROM tests");
+				while($row=mysqli_fetch_array($query))
+				{
+		  ?>
+			<option value="<?php echo $row['id'];?>"><?php echo $row['test'];?></option>
+			<?php
+			}
+			?>
+							</select></td>
+		  </tr>
+		  <tr>
+			<td><label><b>Select a Lab:</b></label></td>
+			<td><select name="lab" id="lab" class="form-control" required>
+			<option value="" disabled selected>-Select Lab-</option>
+				</select></td>
+		  </tr>
+		</table>
+		<br>
+		<input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" name="next_btn" value="Next">
+		<hr>
+		<a href="logoutpage_kartheesh.php"><input class="btn btn-lg btn-danger btn-block text-uppercase" type="button" value="Cancel"></a>
+		</fieldset>	
+     </form>
+		
+		
 		<?php
 			if(isset($_POST['next_btn']))
 			{
@@ -177,7 +202,7 @@
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-  	
-	
+  	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 	</body>
 </html>

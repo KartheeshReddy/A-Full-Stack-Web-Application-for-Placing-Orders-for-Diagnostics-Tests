@@ -6,7 +6,7 @@
 	}
 	if(isset($_SESSION['adminloggedin']))
 	{
-		header('location:database_kartheesh.php');
+		header('location:adminpanel/index.php');
 	}
 ?>
 <!doctype html>

@@ -49,6 +49,9 @@
         <a class="nav-link" href="#section2">Contact</a>
       </li>
 	  <li class="nav-item">
+        <a class="nav-link" href="customerinfo_kartheesh.php">View Booking History</a>
+      </li>
+	  <li class="nav-item">
         <a class="nav-link" href="logout.php">Logout</a>
       </li>
     </ul>

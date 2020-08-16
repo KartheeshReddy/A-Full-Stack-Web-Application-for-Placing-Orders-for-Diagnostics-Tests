@@ -12,7 +12,7 @@
 ?>
 <?php
 	$con=mysqli_connect("us-cdbr-east-02.cleardb.com","b8293ab7f22cc5","9398b6ea") or die("Unable to connect!");
-	mysqli_select_db($con,"heroku_da380dfb3ec7262");
+	mysqli_select_db($con,"heroku_da380dfb3ec7262");	
 ?>
 <!DOCTYPE html>
 <html>
@@ -53,6 +53,9 @@
         <a class="nav-link" href="#section2">Contact</a>
       </li>
 	  <li class="nav-item">
+        <a class="nav-link" href="customerinfo_kartheesh.php">View Booking History</a>
+      </li>
+	  <li class="nav-item">
         <a class="nav-link" href="logout.php">Logout</a>
       </li>
     </ul>
@@ -74,7 +77,8 @@
 				<input type='text' name='mobile' required>
 			</span>
 			<label for=email>Email:</label>  
-              	<input style="padding-right:5px;" type='email' name='email' required>
+          
+				<input style="padding-right:5px;" type='email' name='email' required>
 			<br>
 			<br>
 			<label style="padding-right:75px;" for=address>Delivery Address:</label>  
@@ -105,7 +109,7 @@
 			<hr> 
 			<input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" name="submit_btn" value="Submit">
 			<hr>
-			<a href="logoutpage_kartheesh.php"><input class="btn btn-lg btn-primary btn-block text-uppercase" type="button" value="Cancel"></a>
+			<a href="logoutpage_kartheesh.php"><input class="btn btn-lg btn-danger btn-block text-uppercase" type="button" value="Cancel"></a>
 		    </fieldset>	
 		</form>
 		<?php
