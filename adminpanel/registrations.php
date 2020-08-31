@@ -62,8 +62,7 @@
                   <tbody>
 				  <?php
 					$con=mysqli_connect("us-cdbr-east-02.cleardb.com","b8293ab7f22cc5","9398b6ea") or die("Unable to connect!");
-					mysqli_select_db($con,"heroku_da380dfb3ec7262");
-					
+	mysqli_select_db($con,"heroku_da380dfb3ec7262");
 					$query="SELECT * FROM register";
 					if($query_run=mysqli_query($con,$query))
 					{

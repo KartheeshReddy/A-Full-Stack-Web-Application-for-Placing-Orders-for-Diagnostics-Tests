@@ -9,7 +9,9 @@
 	include("includes/navbar.php");
 	
 ?>
-	<!-- Content Wrapper -->
+
+
+    <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
       <!-- Main Content -->
@@ -36,10 +38,9 @@
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
-		<div class="container-fluid">
-		
-		
-		<?php
+        <div class="container-fluid">
+
+          <?php
 			if(isset($_SESSION['success']) && $_SESSION['success']!='')
 			{
 				echo '<center><h2 class="bg-primary text-white">'.$_SESSION['success'].'</h2></center>';
@@ -51,58 +52,38 @@
 				unset($_SESSION['status']);
 			}
 		  ?>
-		
-		
-   
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <center><h6 class="m-0 font-weight-bold text-primary">Available Labs</h6><center>
+              <center><h6 class="m-0 font-weight-bold text-primary">Assign Tests to Labs</h6></center>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-						<th>Id</th>
-						<th>Lab</th>
-						<th>Action</th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-						<th>Id</th>
-						<th>Lab</th>
-						<th>Action</th>
-                    </tr>
-                  </tfoot>
-                  <tbody>
+					<thead>
+					
+					<tr>
+					<td></td>
 				  <?php
 					$con=mysqli_connect("us-cdbr-east-02.cleardb.com","b8293ab7f22cc5","9398b6ea") or die("Unable to connect!");
-	mysqli_select_db($con,"heroku_da380dfb3ec7262");
-					
-					$query="SELECT * FROM lab";
+					mysqli_select_db($con,"heroku_da380dfb3ec7262");
+					$query="SELECT * FROM tests";
 					if($query_run=mysqli_query($con,$query))
 					{
 					if(mysqli_num_rows($query_run))
 					{
 						while($row=mysqli_fetch_assoc($query_run))
 						{
+				
 							?>
-								<tr>
-									<td><?php echo $row["id"]; ?></td>
-									<td><?php echo $row["lab"]; ?></td>
-									<td>
-										<form action="code.php" method="post">
-											
-											<!--<input type="hidden" name="view_id" value="<?php// echo $_SESSION['view_id']; ?>">-->
-											<input type="hidden" name="view_lab" value="<?php echo $row["lab"]; ?>">
-											<input name="labdel_btn" type="submit" class="btn btn-danger" value='DELETE'>
-										</form>
-									</td>
-								</tr>
+								
+										<th scope="col"><?php echo $row["test"]; ?></th>
+										
 							<?php
+							
 						}
+						
+						
 					}
 					else
 					{
@@ -111,23 +92,122 @@
 					}
 					
 					mysqli_close($con);
-				?>
-                  </tbody>
+				  ?>
+				  <th>Action</th>
+				  </tr>
+				</thead>
+				  <tfoot>
 				  
+					<tr>
+					<td></td>
+				  <?php
+					$con=mysqli_connect("us-cdbr-east-02.cleardb.com","b8293ab7f22cc5","9398b6ea") or die("Unable to connect!");
+					mysqli_select_db($con,"heroku_da380dfb3ec7262");
+					$tests=array();
+					$query="SELECT * FROM tests";
+					if($query_run=mysqli_query($con,$query))
+					{
+					if(mysqli_num_rows($query_run))
+					{
+						while($row=mysqli_fetch_assoc($query_run))
+						{
+								array_push($tests,$row["id"]);
+								//$tests[]=$row;
+							?>
+								
+										<th scope="col"><?php echo $row["test"]; ?></th>
+									
+							<?php
+							
+						}
+						
+					}
+					else
+					{
+						echo "No data found!";
+					}
+					}
+					
+					mysqli_close($con);
+				  ?>
+				   <th>Action</th>
+				  </tr>
+				  
+				</tfoot>
+				
+				  <tbody>
+				  <?php
+					$con=mysqli_connect("us-cdbr-east-02.cleardb.com","b8293ab7f22cc5","9398b6ea") or die("Unable to connect!");
+					mysqli_select_db($con,"heroku_da380dfb3ec7262");
+					$assign=array();
+					$query="SELECT * FROM assign";
+					if($query_run=mysqli_query($con,$query))
+					{
+						if(mysqli_num_rows($query_run))
+						{
+							while($row=mysqli_fetch_assoc($query_run))
+							{
+									array_push($assign,array($row["test_id"],$row["lab"]));
+							}
+						}
+					}
+					
+					
+					
+					$query="SELECT * FROM lab";
+					if($query_run=mysqli_query($con,$query))
+					{
+					if(mysqli_num_rows($query_run))
+					{
+						while($row=mysqli_fetch_assoc($query_run))
+						{
+				
+							?>
+								<tr>
+										<form id="form" method="post" action="code.php">
+										<th scope="row"><?php echo $row["lab"];  ?></th>
+										<input type="hidden" name="view_lab" value="<?php echo $row["lab"]; ?>">
+										<?php
+			
+											foreach($tests as $test_id)
+											{
+												
+												?>
+												<td><center><input type="checkbox" class="form-check-input" name="check[]" <?= (in_array(array($test_id,$row["lab"]),$assign) ? 'checked="checked"' : '' )?> value="<?php echo $test_id; ?>"></center></td>
+												<?php
+												
+											}
+										?>
+										<td><input name="sc_btn" type="submit" class="btn btn-outline-primary" value='Save'></td>
+										</form>
+								</tr>
+							<?php
+							
+						}	
+					}
+					else
+					{
+						echo "No data found!";
+					}
+					}
+					
+					mysqli_close($con);
+				  ?>
+				  
+				  </tbody>
                 </table>
 				
-				
 				<!-- Button trigger modal -->
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-		  Add a Lab
-		</button>
-
+					
+											<!--<input name="sc_btn" type="button" onclick="javascript.sender()" class="btn btn-outline-primary" value='Save Changes'>-->
+											
+		
 		<!-- Modal -->
 		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		  <div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 			  <div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Add Lab</h5>
+				<h5 class="modal-title" id="exampleModalLongTitle">Add test</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				  <span aria-hidden="true">&times;</span>
 				</button>
@@ -135,20 +215,16 @@
 			  
 			  <form action="code.php" method="post">
 				  <div class="modal-body">
-					<input type="hidden" name="view_id" value="<?php echo $id; ?>">
-					
-					<input type="text" name="addlab" id="inputEmail" class="form-control" placeholder="Enter Lab Name" required autofocus>
+					<input type="text" name="addtest" id="inputEmail" class="form-control" placeholder="Enter Test Name" required autofocus>
 				  </div>
 				  <div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="submit" name="addlab_btn" class="btn btn-primary">Save changes</button>
+					<button type="submit" name="addtest_btn" class="btn btn-primary">Save changes</button>
 				  </div>
 			  </form>
 			</div>
 		  </div>
 		</div>
-				
-				
 				
               </div>
             </div>
@@ -160,8 +236,7 @@
       </div>
       <!-- End of Main Content -->
 
-    
-	<!-- Footer -->
+      <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">

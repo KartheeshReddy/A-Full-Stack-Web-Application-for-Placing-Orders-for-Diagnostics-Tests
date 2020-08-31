@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	$con=mysqli_connect("us-cdbr-east-02.cleardb.com","b8293ab7f22cc5","9398b6ea") or die("Unable to connect!");
-	mysqli_select_db($con,"heroku_da380dfb3ec7262");
+					mysqli_select_db($con,"heroku_da380dfb3ec7262");
 	$check=$_SESSION['adminloggedin'];
 	if($check!=true)
 	{

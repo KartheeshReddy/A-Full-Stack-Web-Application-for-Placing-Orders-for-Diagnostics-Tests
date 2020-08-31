@@ -55,6 +55,20 @@
           <i class="fas fa-fw fa-clinic-medical"></i>
           <span>Available Labs</span></a>
       </li>
+	  
+	  <li class="nav-item">
+        <a class="nav-link" href="assign.php">
+          <span>
+		  <i class="fas fa-fw fa-vials"></i>
+		  Assign 
+		  tests
+		  to
+		  labs
+		  <i class="fas fa-fw fa-flask"></i>
+		  </span></a>
+      </li>
+	  
+	  
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">

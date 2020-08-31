@@ -62,24 +62,22 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-						<th>ID</th>
+						<th>Id</th>
 						<th>Test</th>
-						<th>Lab(s)</th>
 						<th>Action</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
-						<th>ID</th>
+						<th>Id</th>
 						<th>Test</th>
-						<th>Lab(s)</th>
 						<th>Action</th>
                     </tr>
                   </tfoot>
                   <tbody>
 				  <?php
 					$con=mysqli_connect("us-cdbr-east-02.cleardb.com","b8293ab7f22cc5","9398b6ea") or die("Unable to connect!");
-					mysqli_select_db($con,"heroku_da380dfb3ec7262");
+	mysqli_select_db($con,"heroku_da380dfb3ec7262");
 					
 					$query="SELECT * FROM tests";
 					if($query_run=mysqli_query($con,$query))
@@ -93,15 +91,16 @@
 								<tr>
 									<td><?php echo $row["id"]; ?></td>
 									<td><?php echo $row["test"]; ?></td>
+									<!--
 									<td>
 										<form action="labs.php" method="post">
-											<input type="hidden" name="view_id" value="<?php echo $row["id"]; ?>">
-											<input type="hidden" name="view_test" value="<?php echo $row["test"]; ?>">
-											<button name="view_btn" type="submit" class="btn btn-success">Click here to view available labs</button>
+											<input type="hidden" name="view_id" value="<?php //echo $row["id"]; ?>">
+											<input type="hidden" name="view_test" value="<?php //echo $row["test"]; ?>">
+											<button name="view_btn" type="submit" class="btn btn-success">Click here to assign tests</button>
 										</form>
 									
 									</td>
-									
+									-->
 									<td>
 										<form action="code.php" method="post">
 											<input type="hidden" name="view_id" value="<?php echo $row["id"]; ?>">

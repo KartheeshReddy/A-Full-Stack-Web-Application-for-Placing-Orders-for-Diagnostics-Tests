@@ -9,7 +9,9 @@
 	include("includes/navbar.php");
 	
 ?>
-	<!-- Content Wrapper -->
+
+
+    <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
       <!-- Main Content -->
@@ -36,10 +38,9 @@
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
-		<div class="container-fluid">
-		
-		
-		<?php
+        <div class="container-fluid">
+
+          <?php
 			if(isset($_SESSION['success']) && $_SESSION['success']!='')
 			{
 				echo '<center><h2 class="bg-primary text-white">'.$_SESSION['success'].'</h2></center>';
@@ -51,13 +52,10 @@
 				unset($_SESSION['status']);
 			}
 		  ?>
-		
-		
-   
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <center><h6 class="m-0 font-weight-bold text-primary">Available Labs</h6><center>
+              <center><h6 class="m-0 font-weight-bold text-primary">Assign multiple tests to a lab</h6></center>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -66,6 +64,7 @@
                     <tr>
 						<th>Id</th>
 						<th>Lab</th>
+						<th>Assign tests</th>
 						<th>Action</th>
                     </tr>
                   </thead>
@@ -73,13 +72,14 @@
                     <tr>
 						<th>Id</th>
 						<th>Lab</th>
+						<th>Assign tests</th>
 						<th>Action</th>
                     </tr>
                   </tfoot>
                   <tbody>
 				  <?php
-					$con=mysqli_connect("us-cdbr-east-02.cleardb.com","b8293ab7f22cc5","9398b6ea") or die("Unable to connect!");
-	mysqli_select_db($con,"heroku_da380dfb3ec7262");
+					$con=mysqli_connect("localhost","root","") or die("Unable to connect!");
+					mysqli_select_db($con,"mentormind");
 					
 					$query="SELECT * FROM lab";
 					if($query_run=mysqli_query($con,$query))
@@ -88,21 +88,42 @@
 					{
 						while($row=mysqli_fetch_assoc($query_run))
 						{
+							$lab_id=$row["id"];
+							$lab=$row["lab"];
 							?>
 								<tr>
 									<td><?php echo $row["id"]; ?></td>
 									<td><?php echo $row["lab"]; ?></td>
+									
 									<td>
 										<form action="code.php" method="post">
-											
-											<!--<input type="hidden" name="view_id" value="<?php// echo $_SESSION['view_id']; ?>">-->
-											<input type="hidden" name="view_lab" value="<?php echo $row["lab"]; ?>">
-											<input name="labdel_btn" type="submit" class="btn btn-danger" value='DELETE'>
+											<div class="form-group">
+												<select id="tests" name="tests[]" multiple="multiple" class="form-control">
+													<option value="" disabled selected>-Choose Test(s)-</option>
+													
+													<?php $query =mysqli_query($con,"SELECT * FROM tests");
+														
+														while($row=mysqli_fetch_array($query))
+														{
+															$test_id=$row["id"];
+													?>
+													<option value="<?php echo $test_id;?>"><?php echo $row['test'];?></option>
+													<?php
+													}
+													?>
+												</select>
+											</div>
+									</td>
+									<td>
+											<input type="hidden" name="view_lab" value="<?php echo $lab; ?>">
+											<input name="assign_teststolab" type="submit" class="btn btn-outline-primary" value='Save Changes'>
 										</form>
 									</td>
 								</tr>
 							<?php
+							
 						}
+						
 					}
 					else
 					{
@@ -113,40 +134,8 @@
 					mysqli_close($con);
 				?>
                   </tbody>
-				  
                 </table>
 				
-				
-				<!-- Button trigger modal -->
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-		  Add a Lab
-		</button>
-
-		<!-- Modal -->
-		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		  <div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Add Lab</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				  <span aria-hidden="true">&times;</span>
-				</button>
-			  </div>
-			  
-			  <form action="code.php" method="post">
-				  <div class="modal-body">
-					<input type="hidden" name="view_id" value="<?php echo $id; ?>">
-					
-					<input type="text" name="addlab" id="inputEmail" class="form-control" placeholder="Enter Lab Name" required autofocus>
-				  </div>
-				  <div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="submit" name="addlab_btn" class="btn btn-primary">Save changes</button>
-				  </div>
-			  </form>
-			</div>
-		  </div>
-		</div>
 				
 				
 				
@@ -160,8 +149,7 @@
       </div>
       <!-- End of Main Content -->
 
-    
-	<!-- Footer -->
+      <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
@@ -219,8 +207,12 @@
 
   <!-- Page level custom scripts -->
   <script src="js/demo/datatables-demo.js"></script>
+  
+  
+  
 
 </body>
 
 </html>
+
 

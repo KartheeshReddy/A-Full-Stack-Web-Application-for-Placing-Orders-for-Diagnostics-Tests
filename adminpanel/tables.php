@@ -101,7 +101,7 @@
                   <tbody>
 				  <?php
 					$con=mysqli_connect("us-cdbr-east-02.cleardb.com","b8293ab7f22cc5","9398b6ea") or die("Unable to connect!");
-					mysqli_select_db($con,"heroku_da380dfb3ec7262");
+	mysqli_select_db($con,"heroku_da380dfb3ec7262");
 					
 					$query="SELECT r.username,r.password,t.test,n.prescription,n.lab,b.customer,b.mobile,b.email,b.address,b.date,b.time,b.id,b.status
 							FROM heroku_da380dfb3ec7262.register AS r 
